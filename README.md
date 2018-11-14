@@ -88,17 +88,26 @@ Hint: there should be the same number of results as there are messages - use
 this to manually check the results you're getting!
 
 ```sql
-
+SELECT message.text, channel.name, user.name FROM message
+INNER JOIN channel ON channel.id = channel_id
+INNER JOIN user ON user.id = user_id
+ORDER BY posted_at ASC;
 ```
 
 ## 11: Find names of the 5 users who have sent the most messages
 
 ```sql
-
+SELECT name, COUNT(text) as message FROM message
+INNER JOIN user ON user.id = user_id
+GROUP BY "name"
+ORDER BY "message" DESC
+LIMIT 5
 ```
 
 ## 12: Find the names of every user who has never sent a message that didn't end with 'has joined the channel'
 
 ```sql
-
+SELECT name FROM user
+LEFT JOIN message ON user.id = message.user_id
+WHERE text IS NULL
 ```
